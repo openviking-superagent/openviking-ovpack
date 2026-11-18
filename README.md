@@ -73,3 +73,33 @@ unzip OpenViking.ovpack -d OpenViking-unpacked
 ## 来源与许可
 
 代码和文档来自上述公开仓库，遵循该仓库的许可（AGPL-3.0）。本仓库只存放导出的资源包，不修改原始内容。
+
+---
+
+# MATLAB 块库包（中文，入库后导出）
+
+这个包是在 OpenViking 里正常入库（MATLAB 块库解析 + 语义处理生成目录 L0/L1）之后用 `ov export` 导出的，不是打包脚本拼出来的。
+
+- 直接下载：[simulink-block-library-zh.ovpack](https://github.com/openviking-superagent/openviking-ovpack/raw/refs/heads/main/simulink-block-library-zh.ovpack)
+- 大小：63,928,527 字节（60.97 MiB）
+
+SHA-256：
+
+```text
+c053cb99e23f89d87fa0030beee7b287ff800764283803f39ad2f639ecfb79b3  simulink-block-library-zh.ovpack
+```
+
+## 内容
+
+- 包内根路径：`simulink-block-library`
+- 根下直接是 73 个产品目录（Simulink、Simscape、Aerospace Blockset …），没有 zh/en 这一层，也没有每层的 `index.md`
+- 9,050 个目录各有 VLM 写的 `.abstract.md` / `.overview.md`
+- 包内条目总数：41,278
+
+## 导入
+
+```bash
+ov import simulink-block-library-zh.ovpack viking://resources
+```
+
+导入后可以用 `ov tree viking://resources/simulink-block-library -L 1` 确认，`ov abstract` / `ov overview` 读取目录摘要。
