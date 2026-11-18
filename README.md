@@ -103,3 +103,36 @@ ov import simulink-block-library-zh.ovpack viking://resources
 ```
 
 导入后可以用 `ov tree viking://resources/simulink-block-library -L 1` 确认，`ov abstract` / `ov overview` 读取目录摘要。
+
+---
+
+# Simulink 块库（中文，正常 add-resource 入库后导出）
+
+从 OpenViking 服务正常 `add-resource` 导入、语义处理生成 L0/L1 之后 `ov export` 出来的包。
+
+- 下载：[simulink-block-library-zh.ovpack](https://github.com/openviking-superagent/openviking-ovpack/raw/refs/heads/main/simulink-block-library-zh.ovpack) — 22,034,178 字节
+- sha256：`226d9151845a58f11812e52e530ce5cb5fb6e2c9d4bffbbebe03d7ea94ce533c`
+
+结构：根下直接是产品目录（Simulink、Simscape、Aerospace Blockset …），一个块一个 Markdown 文件，例如
+
+```text
+Wireless_HDL_Toolbox/Modulation/LTE_OFDM_Modulator.md
+```
+
+不再有 `LTE_OFDM_Modulator/LTE_OFDM_Modulator/参数.md` 这种同名套两层；也没有每层的 `index.md`。806 个目录各有 VLM 写的 `.abstract.md` / `.overview.md`，共 1,612 个 sidecar，全部通过 `parse_abstract_overview` 校验。
+
+导入：
+
+```bash
+ov import simulink-block-library-zh.ovpack viking://resources
+```
+
+复现这次入库：
+
+```bash
+ov add-resource <simulink-block-library/zh 目录> \
+    --to viking://resources/simulink-block-library \
+    --args '{"parse_mode":"no_split"}'
+```
+
+`parse_mode=no_split` 是必须的：默认拆分模式会把一篇块文档展开成 `<块>/<章节>.md`，当章节标题和块名相同时就出现同名两层目录。
